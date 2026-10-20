@@ -1,5 +1,7 @@
 # CCF Deadlines Visual Calendar
 
+English | [简体中文](README-CN.md)
+
 A neat, elegant and customizable Windows desktop calendar for keeping track of CCF conference deadlines.
 
 [![Watch the CCF Deadlines Visual Calendar demo](assets/ccf-calendar-preview.gif)](assets/ccf-calendar-demo.mp4)
