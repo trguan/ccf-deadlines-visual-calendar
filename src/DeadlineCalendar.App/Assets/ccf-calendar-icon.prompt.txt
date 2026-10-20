@@ -1,0 +1,14 @@
+Generation mode: built-in image_gen
+Transparent background: true
+Output: ccf-calendar-icon.png
+
+Use case: logo-brand
+Asset type: square application icon for a Windows desktop conference deadline calendar.
+Primary request: 极简风日历图标，主体是日历，右下角有大写字母“CCF”。
+Scene/backdrop: genuinely transparent background outside the icon.
+Subject: a single front-facing calendar symbol, with a white page, a bold dark outline with softly rounded corners, two simple binding tabs, and a single header divider. A few evenly spaced solid round date dots echo the project's dot-based calendar.
+Style/medium: extremely minimal flat graphic, crisp vector-like geometry, uniform substantial strokes, clean professional app icon.
+Composition/framing: square canvas; one centered icon occupying about 82% of the canvas, even safe margins. Integrate CCF clearly into the lower-right area of the calendar page, with comfortable padding from the border. Keep the sparse date dots away from the lettering so the composition stays uncluttered.
+Color palette: dark slate #172033 and white, matching the project's neutral interface.
+Text (verbatim): "CCF" — exactly C, C, F, uppercase, bold clean sans-serif, compact but clearly legible, lower right.
+Constraints: strong recognizable calendar silhouette, legible at small sizes, only the letters CCF; no additional words or numbers; no shadows, no gradients, no 3D, no perspective, no texture, no decorative objects, no watermark. Produce one finished icon, not a sheet of options.

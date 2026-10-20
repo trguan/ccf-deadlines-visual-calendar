@@ -1,0 +1,46 @@
+# SDKs, build outputs, packages, and local experiments
+.tools/
+**/bin/
+**/obj/
+outputs/
+work/
+*.[zZ][iI][pP]
+
+# Local tests and development documentation
+/tests/
+/docs/
+
+# User data and exported preferences (the embedded public defaults are tracked)
+preferences.json
+catalog-cache.json
+allconf.json
+DeadlineCalendar-config-*.json
+*.log
+*.log.*
+*.tmp
+
+# IDE and test artifacts
+.vs/
+.idea/
+*.user
+*.suo
+*.userosscache
+TestResults/
+coverage/
+*.trx
+*.coverage
+*.coveragexml
+
+# Local credentials and signing material
+.env
+.env.*
+!.env.example
+*.local.json
+*.pfx
+*.p12
+*.key
+
+# Operating-system metadata
+.DS_Store
+Thumbs.db
+Desktop.ini

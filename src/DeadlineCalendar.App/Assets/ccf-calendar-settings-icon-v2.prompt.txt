@@ -1,0 +1,13 @@
+Generation mode: built-in image_gen edit
+Transparent background: true
+Source: ccf-calendar-settings-icon.png
+Output: ccf-calendar-settings-icon-v2.png
+
+Use case: precise-object-edit
+Asset type: CCF calendar settings icon.
+Input images: Image 1 is the exact original settings icon to edit.
+Primary request: ONLY enlarge the existing upper-left gear to TWICE ITS WIDTH AND TWICE ITS HEIGHT. Everything else unchanged.
+Precise scale target: in this 1254 by 1254 image, the existing gear is approximately 270px wide and 280px tall. The final enlarged gear MUST be approximately 540px wide and 560px tall, about 43% of the entire canvas width and 45% of its height. Do not make it merely 440px wide. Use the same six teeth, white center, dark slate fill and white separation outline, proportionally scaled.
+Placement: keep this enlarged gear at the upper-left, entirely within the canvas; place its approximate bounding box from x=25,y=20 to x=565,y=580, so it is a prominent large overlay across the calendar's upper-left corner. It should nearly reach the top and left canvas margins and extend down to just above the first row of date dots. It intentionally covers much of the left binding tab, the left side of the header, and part of the header divider. Do not reduce the gear to avoid that overlap.
+Preserve everything outside the enlarged gear: keep the entire calendar fixed at exactly its original size and position. Keep its original border, both binding tabs (where visible), header divider, all five date dots, exact "CCF" at bottom right, colors, and rendering. No moving or shrinking existing objects. Preserve the original transparent background and square canvas.
+Only one gear: replace the original small gear with the enlarged gear, do not leave a small gear behind. No other changes.

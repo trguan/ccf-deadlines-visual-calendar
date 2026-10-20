@@ -1,0 +1,13 @@
+Generation mode: built-in image_gen edit
+Transparent background: true
+Source: ccf-calendar-icon.png
+Output: ccf-calendar-settings-icon.png
+
+Use case: precise-object-edit
+Asset type: settings-page icon variant of the existing CCF calendar project icon.
+Input images: Image 1 is the edit target and the exact base image to preserve.
+Primary request: 在原图左上角加一个极简的齿轮，其他完全不变。
+Change only: add one small, clearly recognizable minimalist settings gear at the upper-left corner of the calendar, as a compact overlapping corner accent. Use a simple dark-slate gear silhouette with six clean rounded teeth, a white circular center, and a fine white separation edge where needed to distinguish it from the calendar border. Match the existing icon's dark slate color and bold, clean geometric style. The gear should be subordinate to the calendar, around one-fifth of the canvas width, entirely within the canvas.
+Invariants: preserve the original calendar body, two binding tabs, header divider, all five round date dots, the exact CCF lettering at bottom right, their positions, dimensions, proportions, strokes, original colors, and existing rendering. Do not move, scale, redraw, recolor, simplify, replace or restyle any existing part. Only the area immediately covered by the new gear may change. Preserve the original square canvas framing and transparent background.
+Text (verbatim): preserve "CCF" exactly as it is.
+Avoid: extra gears, additional text, badges with words, shadows, new gradients, 3D, new borders around the whole icon, extra decorations, cropping, or any other changes.

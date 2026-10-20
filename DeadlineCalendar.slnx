@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/DeadlineCalendar.App/DeadlineCalendar.App.csproj" />
+    <Project Path="src/DeadlineCalendar.Core/DeadlineCalendar.Core.csproj" />
+    <Project Path="src/DeadlineCalendar.Infrastructure/DeadlineCalendar.Infrastructure.csproj" />
+  </Folder>
+</Solution>

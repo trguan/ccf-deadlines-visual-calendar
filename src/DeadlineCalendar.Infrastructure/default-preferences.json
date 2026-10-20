@@ -1,0 +1,63 @@
+{
+  "SchemaVersion": 1,
+  "Language": "en",
+  "DisplayTimeZoneId": "UTC+08:00",
+  "WeekStartsMonday": true,
+  "LimitCalendarToOneYear": true,
+  "AlwaysOnTop": false,
+  "StartWithWindows": false,
+  "AutoReturnToTodayEnabled": true,
+  "AutoReturnToTodayDelaySeconds": 1,
+  "BackgroundOpacity": 0,
+  "ContentOpacity": 0.8,
+  "PastOpacity": 0.4,
+  "TooltipBackgroundOpacity": 0,
+  "ColorOverrides": {
+    "Foreground": "#808080",
+    "Muted": "#808080"
+  },
+  "TextStyles": {
+    "Headline": {
+      "FontFamily": "Noto Serif SC",
+      "FontSize": 27,
+      "Bold": true,
+      "Italic": false
+    },
+    "Deadline": {
+      "FontFamily": "Segoe UI",
+      "FontSize": 18,
+      "Bold": false,
+      "Italic": false
+    },
+    "Countdown": {
+      "FontFamily": "Segoe UI",
+      "FontSize": 17,
+      "Bold": false,
+      "Italic": false
+    }
+  },
+  "Followed": [
+    { "Key": "AI/cvpr", "ColorHex": "#FF3C3C", "RecurrenceYears": 1 },
+    { "Key": "AI/iccv", "ColorHex": "#E78667", "RecurrenceYears": 2 },
+    { "Key": "AI/eccv", "ColorHex": "#A70202", "RecurrenceYears": 2 },
+    { "Key": "AI/iclr", "ColorHex": "#AECF55", "RecurrenceYears": 1 },
+    { "Key": "AI/nips", "ColorHex": "#8B6DA0", "RecurrenceYears": 1 },
+    { "Key": "AI/icml", "ColorHex": "#E5AC42", "RecurrenceYears": 1 },
+    { "Key": "AI/aaai", "ColorHex": "#235EBB", "RecurrenceYears": 1 },
+    { "Key": "MX/www", "ColorHex": "#4EA448", "RecurrenceYears": 1 },
+    { "Key": "AI/ijcai", "ColorHex": "#334D95", "RecurrenceYears": 1 },
+    { "Key": "AI/acl", "ColorHex": "#4F8FE8", "RecurrenceYears": 1 },
+    { "Key": "AI/emnlp", "ColorHex": "#008080", "RecurrenceYears": 1 },
+    { "Key": "AI/naacl", "ColorHex": "#36B5A0", "RecurrenceYears": 2 },
+    { "Key": "AI/uai", "ColorHex": "#E5AC42", "RecurrenceYears": 1 }
+  ],
+  "HeaderConferenceKey": null,
+  "Exclusions": [],
+  "Bounds": {
+    "Left": -1,
+    "Top": -1,
+    "Width": 250,
+    "Height": 900
+  },
+  "FirstRunCompleted": true
+}

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>DeadlineCalendar</AssemblyName>
+    <RootNamespace>DeadlineCalendar.App</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets/app.ico</ApplicationIcon>
+    <Version>1.0.0</Version>
+    <!-- WPF owns per-monitor DPI configuration; WinForms is used only for NotifyIcon. -->
+    <NoWarn>$(NoWarn);WFO0003</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Resource Include="Assets/app.ico" />
+    <Resource Include="Assets/settings.ico" />
+    <ProjectReference Include="../DeadlineCalendar.Core/DeadlineCalendar.Core.csproj" />
+    <ProjectReference Include="../DeadlineCalendar.Infrastructure/DeadlineCalendar.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>

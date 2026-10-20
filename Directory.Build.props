@@ -1,0 +1,7 @@
+<Project>
+  <PropertyGroup>
+    <!-- Keep developer checkout paths out of compiler-generated source locations. -->
+    <PathMap>$(MSBuildThisFileDirectory)=/_/</PathMap>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+</Project>

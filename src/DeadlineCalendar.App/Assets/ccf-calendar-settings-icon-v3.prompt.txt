@@ -1,0 +1,15 @@
+Generation mode: built-in image_gen edit
+Transparent background: true
+Base image: ccf-calendar-icon.png
+Gear reference: generated large-gear draft based on the user red-circle size guide
+Output: ccf-calendar-settings-icon-v3.png
+
+Use case: precise-object-edit
+Asset type: final CCF calendar settings icon with an oversized gear.
+Input images: Image 1 is the CLEAN ORIGINAL CALENDAR and is the base edit target. Image 2 is a reference for the six-tooth gear design and existing large-gear placement only; ignore its ragged alpha artifacts.
+Primary request: 再放大齿轮，直到把日历里面的五个日期圆点全部遮住。右下角 CCF 必须完整保留，日历的其他部分不变。
+Edit Image 1: add one HUGE minimalist six-tooth dark-slate settings gear with a white circular center and clean white outline, in front of the upper-left and central calendar. Make it larger than the gear in Image 2. It must extend down far enough and rightward far enough that ALL FIVE original date dots are COMPLETELY HIDDEN behind its solid body. Not a single date dot or date-dot fragment may remain visible. Scale and place the gear to achieve complete occlusion of the entire date-dot grid.
+Shape/composition: preserve the existing simple rounded six-tooth gear style, but allow a broad lower tooth/body to fully cover both lower dots. Its bottom edge can extend almost down to the baseline of the CCF lettering on the left, while the lower-right area around "CCF" stays clear. Keep the entire CCF word perfectly visible and unchanged. The gear dominates roughly the upper-left three quarters of the icon, with the calendar recognizable by its right binding, right edge, lower edge and CCF. Keep the huge gear contained in the square canvas with a small clear margin.
+Invariants: keep the calendar in Image 1 at the EXACT original size and position, preserve original white paper, original dark-slate border and rendering, original right binding and exact CCF lettering where visible. Do not shift, shrink or move any existing calendar elements. The five dots are merely occluded by the oversized gear, never moved elsewhere.
+Edge quality: perfectly smooth clean anti-aliased contour, clean solid white outline, NO ragged edges, NO white speckles, NO rough matte fragments, NO grunge. This is a crisp geometric application icon, not a cut-paper effect.
+Output: same square canvas, genuine transparent background, one calendar plus one giant gear. No red marks, no extra symbols or text, no remaining visible date dots.
