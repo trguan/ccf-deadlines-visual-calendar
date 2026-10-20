@@ -7,6 +7,7 @@ namespace DeadlineCalendar.Infrastructure;
 public sealed class SyncService : IDisposable
 {
     public static readonly Uri CatalogUri = new("https://ccfddl.com/conference/allconf.json");
+    public static readonly Uri FallbackCatalogUri = new("https://ccfddl.top/");
     private static readonly TimeSpan[] RetryDelays = [TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(15), TimeSpan.FromHours(1)];
     private readonly AppStorage _storage;
     private readonly HttpClient _client;
@@ -69,37 +70,11 @@ public sealed class SyncService : IDisposable
             RaiseUpdated();
             try
             {
-                using var requestTimeout = CancellationTokenSource.CreateLinkedTokenSource(_lifetime.Token);
-                requestTimeout.CancelAfter(TimeSpan.FromSeconds(45));
-                var requestToken = requestTimeout.Token;
-                using var request = new HttpRequestMessage(HttpMethod.Get, CatalogUri);
-                request.Headers.UserAgent.ParseAdd("DeadlineCalendar/1.0");
-                request.Headers.Accept.ParseAdd("application/json");
-                if (!string.IsNullOrWhiteSpace(_cached?.ETag)) request.Headers.TryAddWithoutValidation("If-None-Match", _cached.ETag);
-                using var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, requestToken).ConfigureAwait(false);
-                string rawJson;
-                CatalogSnapshot snapshot;
-                if (response.StatusCode == HttpStatusCode.NotModified)
-                {
-                    if (_cached is null) throw new InvalidDataException("The server returned 304 without a cached catalog.");
-                    rawJson = _cached.RawJson;
-                    snapshot = _cached.Snapshot;
-                }
-                else
-                {
-                    response.EnsureSuccessStatusCode();
-                    if (response.Content.Headers.ContentLength > 20 * 1024 * 1024) throw new InvalidDataException("The catalog response is unexpectedly large.");
-                    await response.Content.LoadIntoBufferAsync(20 * 1024 * 1024, requestToken).ConfigureAwait(false);
-                    rawJson = await response.Content.ReadAsStringAsync(requestToken).ConfigureAwait(false);
-                    if (rawJson.Length > 20 * 1024 * 1024) throw new InvalidDataException("The catalog response is unexpectedly large.");
-                    snapshot = AppStorage.ParseValidCatalog(rawJson);
-                }
-                var fetchedAt = _timeProvider.GetUtcNow();
-                var etag = response.Headers.ETag?.ToString() ?? (response.StatusCode == HttpStatusCode.NotModified ? _cached?.ETag : null);
-                await _storage.SaveCacheAsync(rawJson, fetchedAt, etag, requestToken).ConfigureAwait(false);
-                _cached = new CachedCatalog(snapshot, fetchedAt, etag, rawJson);
-                Catalog = snapshot;
-                LastSuccessUtc = fetchedAt;
+                var downloaded = await FetchCatalogWithFallbackAsync().ConfigureAwait(false);
+                await _storage.SaveCacheAsync(downloaded.RawJson, downloaded.FetchedAt, downloaded.ETag, _lifetime.Token).ConfigureAwait(false);
+                _cached = downloaded;
+                Catalog = downloaded.Snapshot;
+                LastSuccessUtc = downloaded.FetchedAt;
                 LastError = null;
                 _failureCount = 0;
                 _nextRetryUtc = null;
@@ -119,6 +94,58 @@ public sealed class SyncService : IDisposable
             }
         }
         finally { _refreshGate.Release(); }
+    }
+
+    private async Task<CachedCatalog> FetchCatalogWithFallbackAsync()
+    {
+        try { return await FetchCatalogAsync(CatalogUri).ConfigureAwait(false); }
+        catch (Exception ex) when (!_lifetime.IsCancellationRequested &&
+            ex is HttpRequestException or IOException or InvalidDataException or System.Text.Json.JsonException or ArgumentException or InvalidOperationException or FormatException or OperationCanceledException)
+        {
+            _storage.Log("Primary catalog download failed; trying https://ccfddl.top/.", ex);
+            return await FetchCatalogAsync(FallbackCatalogUri).ConfigureAwait(false);
+        }
+    }
+
+    private async Task<CachedCatalog> FetchCatalogAsync(Uri uri)
+    {
+        _lifetime.Token.ThrowIfCancellationRequested();
+        // Each site gets a separate timeout, so a primary timeout cannot cancel the fallback.
+        using var requestTimeout = CancellationTokenSource.CreateLinkedTokenSource(_lifetime.Token);
+        requestTimeout.CancelAfter(TimeSpan.FromSeconds(45));
+        var requestToken = requestTimeout.Token;
+        var isPrimary = uri == CatalogUri;
+        using var request = new HttpRequestMessage(HttpMethod.Get, uri);
+        request.Headers.UserAgent.ParseAdd("DeadlineCalendar/1.0");
+        request.Headers.Accept.ParseAdd(isPrimary ? "application/json" : "text/html");
+        if (isPrimary && !string.IsNullOrWhiteSpace(_cached?.ETag))
+            request.Headers.TryAddWithoutValidation("If-None-Match", _cached.ETag);
+        using var response = await _client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, requestToken).ConfigureAwait(false);
+        string rawJson;
+        CatalogSnapshot snapshot;
+        if (response.StatusCode == HttpStatusCode.NotModified)
+        {
+            if (_cached is null || !request.Headers.Contains("If-None-Match"))
+                throw new InvalidDataException("The server returned 304 without a matching conditional request.");
+            rawJson = _cached.RawJson;
+            snapshot = _cached.Snapshot;
+        }
+        else
+        {
+            response.EnsureSuccessStatusCode();
+            if (response.Content.Headers.ContentLength > 20 * 1024 * 1024) throw new InvalidDataException("The catalog response is unexpectedly large.");
+            await response.Content.LoadIntoBufferAsync(20 * 1024 * 1024, requestToken).ConfigureAwait(false);
+            var body = await response.Content.ReadAsStringAsync(requestToken).ConfigureAwait(false);
+            if (body.Length > 20 * 1024 * 1024) throw new InvalidDataException("The catalog response is unexpectedly large.");
+            rawJson = isPrimary ? body : FallbackCatalogParser.Parse(body, _cached?.RawJson);
+            snapshot = AppStorage.ParseValidCatalog(rawJson);
+        }
+        requestToken.ThrowIfCancellationRequested();
+        // Cache validators belong to the primary origin; fallback HTML is converted to JSON.
+        var etag = isPrimary
+            ? response.Headers.ETag?.ToString() ?? (response.StatusCode == HttpStatusCode.NotModified ? _cached?.ETag : null)
+            : null;
+        return new CachedCatalog(snapshot, _timeProvider.GetUtcNow(), etag, rawJson);
     }
 
     private bool IsDue(DateTimeOffset now)
